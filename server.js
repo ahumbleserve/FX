@@ -7,19 +7,19 @@ var middleware = require('./middleware.js')(db);
 
 var app = express();
 var PORT = process.env.PORT || 3000;
-var todos = [];
-var todoNextId = 1;
+var items = [];
+var itemNextId = 1;
 
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-	res.send('Todo API Root');
+	res.send('FX API Root');
 });
 
 
-////////// TODOS //////////
-// GET /todos?completed=false&q=work
-app.get('/todos', middleware.requireAuthentication, function(req, res) {
+////////// ITEMS //////////
+// GET /items?completed=false&q=work
+app.get('/items', middleware.requireAuthentication, function(req, res) {
 	var query = req.query;
 	var where = {
 		userId:req.user.get('id')
@@ -37,27 +37,27 @@ app.get('/todos', middleware.requireAuthentication, function(req, res) {
 		};
 	}
 
-	db.todo.findAll({
+	db.item.findAll({
 		where: where
-	}).then(function(todos) {
-		res.json(todos);
+	}).then(function(items) {
+		res.json(items);
 	}, function(e) {
 		res.status(500).send();
 	});
 });
 
-// GET /todos/:id
-app.get('/todos/:id',  middleware.requireAuthentication, function(req, res) {
-	var todoId = parseInt(req.params.id, 10);
+// GET /items/:id
+app.get('/items/:id',  middleware.requireAuthentication, function(req, res) {
+	var itemId = parseInt(req.params.id, 10);
 
-	db.todo.findOne({
+	db.item.findOne({
 		where:{
-			id:todoId,
+			id:itemId,
 			userId:req.user.get('id')
 		}
-	}).then(function(todo) {
-		if (!!todo) {
-			res.json(todo.toJSON());
+	}).then(function(item) {
+		if (!!item) {
+			res.json(item.toJSON());
 		} else {
 			res.status(404).send();
 		}
@@ -66,35 +66,35 @@ app.get('/todos/:id',  middleware.requireAuthentication, function(req, res) {
 	});
 });
 
-// POST /todos
-app.post('/todos',  middleware.requireAuthentication, function(req, res) {
+// POST /items
+app.post('/items',  middleware.requireAuthentication, function(req, res) {
 	var body = _.pick(req.body, 'description', 'completed');
 
-	db.todo.create(body).then(function(todo) {
+	db.item.create(body).then(function(item) {
 		
-		req.user.addTodo(todo).then(function(){
-			return todo.reload();
-		}).then(function(todo){
-			res.json(todo.toJSON());
+		req.user.addItem(item).then(function(){
+			return item.reload();
+		}).then(function(item){
+			res.json(item.toJSON());
 		});
 	}, function(e) {
 		res.status(400).json(e);
 	});
 });
 
-// DELETE /todos/:id
-app.delete('/todos/:id',  middleware.requireAuthentication, function(req, res) {
-	var todoId = parseInt(req.params.id, 10);
+// DELETE /items/:id
+app.delete('/items/:id',  middleware.requireAuthentication, function(req, res) {
+	var itemId = parseInt(req.params.id, 10);
 
-	db.todo.destroy({
+	db.item.destroy({
 		where: {
-			id: todoId,
+			id: itemId,
 			userId:req.user.get('id')
 		}
 	}).then(function(rowsDeleted) {
 		if (rowsDeleted === 0) {
 			res.status(404).json({
-				error: 'No todo with id'
+				error: 'No item with id'
 			});
 		} else {
 			res.status(204).send();
@@ -104,9 +104,9 @@ app.delete('/todos/:id',  middleware.requireAuthentication, function(req, res) {
 	});
 });
 
-// PUT /todos/:id
-app.put('/todos/:id',  middleware.requireAuthentication, function(req, res) {
-	var todoId = parseInt(req.params.id, 10);
+// PUT /items/:id
+app.put('/items/:id',  middleware.requireAuthentication, function(req, res) {
+	var itemId = parseInt(req.params.id, 10);
 	var body = _.pick(req.body, 'description', 'completed');
 	var attributes = {};
 
@@ -118,15 +118,15 @@ app.put('/todos/:id',  middleware.requireAuthentication, function(req, res) {
 		attributes.description = body.description;
 	}
 
-	db.todo.findOne({
+	db.item.findOne({
 		where:{
-			id:todoId,
+			id:itemId,
 			userId:req.user.get('id')
 		}
-	}).then(function(todo) {
-		if (todo) {
-			todo.update(attributes).then(function(todo) {
-				res.json(todo.toJSON());
+	}).then(function(item) {
+		if (item) {
+			item.update(attributes).then(function(item) {
+				res.json(item.toJSON());
 			}, function(e) {
 				res.status(400).json(e);
 			});
