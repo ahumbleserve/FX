@@ -18,21 +18,21 @@ app.get('/', function(req, res) {
 
 
 ////////// ITEMS //////////
-// GET /items?completed=false&q=work
+// GET /items?acquired=false&q=work
 app.get('/items', middleware.requireAuthentication, function(req, res) {
 	var query = req.query;
 	var where = {
 		userId:req.user.get('id')
 	};
 
-	if (query.hasOwnProperty('completed') && query.completed === 'true') {
-		where.completed = true;
-	} else if (query.hasOwnProperty('completed') && query.completed === 'false') {
-		where.completed = false;
+	if (query.hasOwnProperty('acquired') && query.acquired === 'true') {
+		where.acquired = true;
+	} else if (query.hasOwnProperty('acquired') && query.acquired === 'false') {
+		where.acquired = false;
 	}
 
 	if (query.hasOwnProperty('q') && query.q.length > 0) {
-		where.description = {
+		where.name = {
 			$like: '%' + query.q + '%'
 		};
 	}
@@ -68,7 +68,7 @@ app.get('/items/:id',  middleware.requireAuthentication, function(req, res) {
 
 // POST /items
 app.post('/items',  middleware.requireAuthentication, function(req, res) {
-	var body = _.pick(req.body, 'description', 'completed');
+	var body = _.pick(req.body, 'name', 'description', 'value', 'acquired');
 
 	db.item.create(body).then(function(item) {
 		
@@ -107,11 +107,19 @@ app.delete('/items/:id',  middleware.requireAuthentication, function(req, res) {
 // PUT /items/:id
 app.put('/items/:id',  middleware.requireAuthentication, function(req, res) {
 	var itemId = parseInt(req.params.id, 10);
-	var body = _.pick(req.body, 'description', 'completed');
+	var body = _.pick(req.body, 'name', 'description', 'value', 'acquired');
 	var attributes = {};
 
-	if (body.hasOwnProperty('completed')) {
-		attributes.completed = body.completed;
+	if (body.hasOwnProperty('acquired')) {
+		attributes.acquired = body.acquired;
+	}
+
+	if (body.hasOwnProperty('name')) {
+		attributes.name = body.name;
+	}
+
+	if (body.hasOwnProperty('value')) {
+		attributes.value = body.value;
 	}
 
 	if (body.hasOwnProperty('description')) {
@@ -150,7 +158,6 @@ app.post('/users', function(req, res) {
 	});
 });
 
-
 // POST /users/login
 app.post('/users/login', function(req, res) {
 	var body = _.pick(req.body, 'email', 'password');
@@ -163,18 +170,11 @@ app.post('/users/login', function(req, res) {
 			token:token
 		});
 
-		// if(token){
-		// 	res.header('Auth', token).json(user.toPublicJSON());
-		// }else{
-		// 	res.status(401).send();
-		// }
 	}).then(function(tokenInstance){
 		res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
 	}).catch(function(){
 		res.status(401).send();
 	});
-
-	//res.json(body);
 });
 
 //DELETE /users/login
