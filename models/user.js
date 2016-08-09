@@ -5,6 +5,14 @@ var jwt = require('jsonwebtoken');
 
 module.exports = function(sequelize, DataTypes) {
 	var user = sequelize.define('user', {
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: 
+			{
+				len:[5,200]
+			}
+		},
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -35,6 +43,9 @@ module.exports = function(sequelize, DataTypes) {
 				this.setDataValue('password_hash', hashedPassword);
 			}
 
+		},
+		address: {
+			type:DataTypes.JSON
 		}
 	},{
 		hooks:{
@@ -47,7 +58,7 @@ module.exports = function(sequelize, DataTypes) {
 		instanceMethods:{
 			toPublicJSON:function(){
 				var json = this.toJSON();
-				return _.pick(this, 'id', 'email','createdAt','updatedAt');
+				return _.pick(this, 'id', 'name', 'email', 'address', 'createdAt','updatedAt');
 			},
 			generateToken:function(type){
 				if(!_.isString(type)){

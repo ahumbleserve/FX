@@ -1,0 +1,160 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'apidoc',
+1 verbose cli   '-g' ]
+2 info using npm@2.15.8
+3 info using node@v4.4.7
+4 verbose install initial load of /usr/local/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/lib/package.json
+6 silly cache add args [ 'apidoc', null ]
+7 verbose cache add spec apidoc
+8 silly cache add parsed spec Result {
+8 silly cache add   raw: 'apidoc',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'apidoc',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: 'latest',
+8 silly cache add   type: 'tag' }
+9 silly addNamed apidoc@latest
+10 verbose addNamed "latest" is being treated as a dist-tag for apidoc
+11 info addNameTag [ 'apidoc', 'latest' ]
+12 silly mapToRegistry name apidoc
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry data Result {
+15 silly mapToRegistry   raw: 'apidoc',
+15 silly mapToRegistry   scope: null,
+15 silly mapToRegistry   name: 'apidoc',
+15 silly mapToRegistry   rawSpec: '',
+15 silly mapToRegistry   spec: 'latest',
+15 silly mapToRegistry   type: 'tag' }
+16 silly mapToRegistry uri https://registry.npmjs.org/apidoc
+17 verbose addNameTag registry:https://registry.npmjs.org/apidoc not in flight; fetching
+18 verbose get https://registry.npmjs.org/apidoc not expired, no request
+19 silly addNameTag next cb for apidoc with tag latest
+20 silly addNamed apidoc@0.16.1
+21 verbose addNamed "0.16.1" is a plain semver version for apidoc
+22 silly cache afterAdd apidoc@0.16.1
+23 verbose afterAdd /Users/VITOR/.npm/apidoc/0.16.1/package/package.json not in flight; writing
+24 verbose correctMkdir /Users/VITOR/.npm correctMkdir not in flight; initializing
+25 verbose afterAdd /Users/VITOR/.npm/apidoc/0.16.1/package/package.json written
+26 silly install resolved [ { name: 'apidoc',
+26 silly install resolved     version: '0.16.1',
+26 silly install resolved     description: 'RESTful web API Documentation Generator',
+26 silly install resolved     author: { name: 'Peter Rottmann', email: 'rottmann@inveris.de' },
+26 silly install resolved     license:
+26 silly install resolved      { type: 'MIT',
+26 silly install resolved        url: 'https://github.com/apidoc/apidoc/blob/master/LICENSE' },
+26 silly install resolved     preferGlobal: true,
+26 silly install resolved     bin: { apidoc: 'bin/apidoc' },
+26 silly install resolved     main: './lib/index.js',
+26 silly install resolved     homepage: 'http://apidocjs.com',
+26 silly install resolved     repository: { type: 'git', url: 'git+https://github.com/apidoc/apidoc.git' },
+26 silly install resolved     bugs: { url: 'https://github.com/apidoc/apidoc/issues' },
+26 silly install resolved     scripts:
+26 silly install resolved      { test: 'npm run jshint && mocha test/',
+26 silly install resolved        jshint: 'jshint lib/ test/',
+26 silly install resolved        'build-example': 'bin/apidoc -i example/ -o tmp/',
+26 silly install resolved        'check-updates': 'npm-check-updates' },
+26 silly install resolved     keywords: [ 'api', 'apidoc', 'doc', 'documentation', 'rest', 'restful' ],
+26 silly install resolved     engines: { node: '>= 0.10.0' },
+26 silly install resolved     dependencies:
+26 silly install resolved      { 'apidoc-core': '~0.7.1',
+26 silly install resolved        'fs-extra': '~0.28.0',
+26 silly install resolved        lodash: '~4.11.1',
+26 silly install resolved        'markdown-it': '^6.0.1',
+26 silly install resolved        nomnom: '~1.8.1',
+26 silly install resolved        winston: '~2.2.0' },
+26 silly install resolved     devDependencies:
+26 silly install resolved      { 'apidoc-example': '*',
+26 silly install resolved        jshint: '^2.9.2',
+26 silly install resolved        mocha: '~2.4.5',
+26 silly install resolved        'npm-check-updates': '^2.6.3',
+26 silly install resolved        'path-to-regexp': '^1.2.1',
+26 silly install resolved        semver: '^5.1.0',
+26 silly install resolved        should: '~8.3.1',
+26 silly install resolved        webfontloader: '^1.6.24' },
+26 silly install resolved     jshintConfig:
+26 silly install resolved      { camelcase: true,
+26 silly install resolved        curly: false,
+26 silly install resolved        eqeqeq: true,
+26 silly install resolved        forin: true,
+26 silly install resolved        latedef: false,
+26 silly install resolved        newcap: true,
+26 silly install resolved        undef: true,
+26 silly install resolved        unused: true,
+26 silly install resolved        trailing: true,
+26 silly install resolved        node: true,
+26 silly install resolved        browser: true,
+26 silly install resolved        predef: [Object] },
+26 silly install resolved     gitHead: 'e3eb4d19eb9d2080fd62c416ca786ad1d81705ad',
+26 silly install resolved     _id: 'apidoc@0.16.1',
+26 silly install resolved     _shasum: '26a1cde4f2c4910936ad57adf41dbc83c246e5e9',
+26 silly install resolved     _from: 'apidoc@latest',
+26 silly install resolved     _npmVersion: '2.14.20',
+26 silly install resolved     _nodeVersion: '4.4.1',
+26 silly install resolved     _npmUser: { name: 'apidoc', email: 'info@apidocjs.com' },
+26 silly install resolved     maintainers: [ [Object] ],
+26 silly install resolved     dist:
+26 silly install resolved      { shasum: '26a1cde4f2c4910936ad57adf41dbc83c246e5e9',
+26 silly install resolved        tarball: 'https://registry.npmjs.org/apidoc/-/apidoc-0.16.1.tgz' },
+26 silly install resolved     _npmOperationalInternal:
+26 silly install resolved      { host: 'packages-16-east.internal.npmjs.com',
+26 silly install resolved        tmp: 'tmp/apidoc-0.16.1.tgz_1461315654620_0.9403925731312484' },
+26 silly install resolved     directories: {},
+26 silly install resolved     _resolved: 'https://registry.npmjs.org/apidoc/-/apidoc-0.16.1.tgz',
+26 silly install resolved     readme: 'ERROR: No README data found!' } ]
+27 info install apidoc@0.16.1 into /usr/local/lib
+28 info installOne apidoc@0.16.1
+29 verbose installOne of apidoc to /usr/local/lib not in flight; installing
+30 verbose correctMkdir /Users/VITOR/.npm/_locks correctMkdir not in flight; initializing
+31 verbose lock using /Users/VITOR/.npm/_locks/apidoc-f9aa0b37c1929e76.lock for /usr/local/lib/node_modules/apidoc
+32 silly install write writing apidoc 0.16.1 to /usr/local/lib/node_modules/apidoc
+33 verbose unbuild lib/node_modules/apidoc
+34 silly gentlyRm /usr/local/lib/node_modules/apidoc is being purged from base /usr/local
+35 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/apidoc
+36 verbose tar unpack /Users/VITOR/.npm/apidoc/0.16.1/package.tgz
+37 verbose tar unpacking to /usr/local/lib/node_modules/apidoc
+38 silly gentlyRm /usr/local/lib/node_modules/apidoc is being purged
+39 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/apidoc
+40 silly gunzTarPerm modes [ '755', '644' ]
+41 error tar.unpack untar error /Users/VITOR/.npm/apidoc/0.16.1/package.tgz
+42 verbose unlock done using /Users/VITOR/.npm/_locks/apidoc-f9aa0b37c1929e76.lock for /usr/local/lib/node_modules/apidoc
+43 verbose fstream_path /usr/local/lib/node_modules/apidoc
+44 verbose fstream_type Directory
+45 verbose fstream_class DirWriter
+46 verbose stack Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/apidoc'
+46 verbose stack     at Error (native)
+47 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25
+47 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53
+47 verbose fstream_stack FSReqWrap.oncomplete (fs.js:82:15)
+48 verbose cwd /Users/VITOR/Desktop/node-course/FX
+49 error Darwin 15.3.0
+50 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "apidoc" "-g"
+51 error node v4.4.7
+52 error npm  v2.15.8
+53 error path /usr/local/lib/node_modules/apidoc
+54 error code EACCES
+55 error errno -13
+56 error syscall mkdir
+57 error Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/apidoc'
+57 error     at Error (native)
+57 error  { [Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/apidoc']
+57 error   errno: -13,
+57 error   code: 'EACCES',
+57 error   syscall: 'mkdir',
+57 error   path: '/usr/local/lib/node_modules/apidoc',
+57 error   fstream_type: 'Directory',
+57 error   fstream_path: '/usr/local/lib/node_modules/apidoc',
+57 error   fstream_class: 'DirWriter',
+57 error   fstream_stack:
+57 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25',
+57 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53',
+57 error      'FSReqWrap.oncomplete (fs.js:82:15)' ] }
+58 error Please try running this command again as root/Administrator.
+59 verbose exit [ -13, true ]
+60 verbose unbuild lib/node_modules/apidoc
+61 silly gentlyRm /usr/local/lib/node_modules/apidoc is being purged from base /usr/local
+62 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/apidoc

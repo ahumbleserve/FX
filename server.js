@@ -4,7 +4,8 @@ var _ = require('underscore');
 var db = require('./db.js');
 var bcrypt = require('bcrypt');
 var middleware = require('./middleware.js')(db);
-
+var address = require('./services/address.js');
+	
 var app = express();
 var PORT = process.env.PORT || 3000;
 var items = [];
@@ -146,13 +147,32 @@ app.put('/items/:id',  middleware.requireAuthentication, function(req, res) {
 	});
 });
 
+
+
 ////////// USERS //////////
 // POST /users
 app.post('/users', function(req, res) {
-	var body = _.pick(req.body, 'email', 'password');
+	var body = _.pick(req.body, 'name', 'email', 'password','cep');
 
 	db.user.create(body).then(function(user) {
-		res.json(user.toPublicJSON());
+		
+		address(body.cep, function (currentAddress) {
+			console.log(currentAddress);
+		
+			if(currentAddress && typeof(currentAddress) === 'object'){
+				var attributes = {};
+				attributes.address = currentAddress;
+				user.update(attributes).then(function(user) {
+					res.json(user.toPublicJSON());
+				}, function(e) {
+					res.json(user.toPublicJSON());
+				});
+			}else{
+				res.json(user.toPublicJSON());
+			}
+		});
+
+		
 	}, function(e) {
 		res.status(400).json(e);
 	});
@@ -160,7 +180,7 @@ app.post('/users', function(req, res) {
 
 // POST /users/login
 app.post('/users/login', function(req, res) {
-	var body = _.pick(req.body, 'email', 'password');
+	var body = _.pick(req.body, 'email', 'password', 'cep');
 	var userInstance;
 
 	db.user.authenticate(body).then(function(user){
@@ -184,6 +204,81 @@ app.delete('/users/login', middleware.requireAuthentication, function(req, res){
 	}).catch(function(){
 		res.status(500).send();
 	});
+});
+
+// GET /users/
+app.get('/users/',  middleware.requireAuthentication, function(req, res) {
+
+	db.user.findOne({
+		where:{
+			id:req.user.get('id')
+		}
+	}).then(function(user) {
+		if (!!user) {
+			res.json(user.toPublicJSON());
+		} else {
+			res.status(404).send();
+		}
+	}, function(e) {
+		res.status(500).send();
+	});
+});
+
+//PUT/users/
+app.put('/users/',  middleware.requireAuthentication, function(req, res) {
+	//var userId = parseInt(req.params.id, 10);
+	var body = _.pick(req.body, 'name', 'email', 'password', 'cep');
+	var attributes = {};
+
+	// if (body.hasOwnProperty('cep')) {
+	// 	attributes.acquired = body.acquired;
+	// }
+
+	if (body.hasOwnProperty('name')) {
+		attributes.name = body.name;
+	}
+
+	if (body.hasOwnProperty('email')) {
+		attributes.email = body.email;
+	}
+
+	if (body.hasOwnProperty('password')) {
+		attributes.password = body.password;
+	}
+
+	db.user.findOne({
+		where:{
+			id:req.user.get('id')
+		}
+	}).then(function(user) {
+		if (user) {
+			user.update(attributes).then(function(user) {
+				
+				address(body.cep, function (currentAddress) {
+			
+					if(currentAddress  && typeof(currentAddress) === 'object'){
+						var attributes = {};
+						attributes.address = currentAddress;
+						user.update(attributes).then(function(user) {
+							res.json(user.toPublicJSON());
+						}, function(e) {
+							res.json(user.toPublicJSON());
+						});
+					}else{
+						res.json(user.toPublicJSON());
+					}
+				});
+
+			}, function(e) {
+				res.status(400).json(e);
+			});
+		} else {
+			res.status(404).send();
+		}
+	}, function() {
+		res.status(500).send();
+	});
+
 });
 
 

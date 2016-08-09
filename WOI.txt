@@ -1,6 +1,0 @@
-FX
-change to new git repo
-change to new heroku app
-	not running on heroku (probably config)
-
-
