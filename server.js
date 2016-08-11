@@ -13,6 +13,8 @@ var itemNextId = 1;
 
 app.use(bodyParser.json());
 
+app.use(express.static("public"));
+
 app.get('/', function(req, res) {
 	res.send('FX API Root');
 });
@@ -47,7 +49,22 @@ app.get('/items', middleware.requireAuthentication, function(req, res) {
 	});
 });
 
-// GET /items/:id
+/**
+ * @api {get} /items/:id Request Item information
+ * @apiName GetItem
+ * @apiGroup Items
+ *
+ * @apiParam {Number} id Item's unique ID.
+ *
+ * @apiSuccess {Number} id Item's unique ID.
+ * @apiSuccess {String} name name of the Item.
+ * @apiSuccess {String} description description of the Item.
+ * @apiSuccess {Double} value price of the Item.
+ * @apiSuccess {Boolean} acquired (flag) indicates whether the User acquired the Item.
+ * @apiSuccess {String} createdAt Item's date of creation.
+ * @apiSuccess {String} updatedAt Item's date of update.
+ * @apiSuccess {Number} userID User's ID of the owner of the Item.
+ */
 app.get('/items/:id',  middleware.requireAuthentication, function(req, res) {
 	var itemId = parseInt(req.params.id, 10);
 
@@ -150,7 +167,6 @@ app.put('/items/:id',  middleware.requireAuthentication, function(req, res) {
 
 
 ////////// USERS //////////
-// POST /users
 app.post('/users', function(req, res) {
 	var body = _.pick(req.body, 'name', 'email', 'password','cep');
 
